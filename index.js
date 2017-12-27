@@ -6,8 +6,8 @@ import mongoose from 'mongoose'
 
 import typeDefs from './schema'
 import resolvers from './resolvers'
-import env from './.env'
 import Talk from './model'
+const env = require('dotenv').config()
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -15,8 +15,8 @@ const schema = makeExecutableSchema({
 })
 
 mongoose.connect(
-  `mongodb://${env.username}:${
-    env.password
+  `mongodb://${process.env.DB_USER}:${
+    process.env.DB_PASS
   }@ds042527.mlab.com:42527/awesome-talks`
 )
 
@@ -33,3 +33,5 @@ app.use(
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
 
 app.listen(PORT)
+
+console.log(`YASS QUEEN ON PORT: ${PORT}`)
